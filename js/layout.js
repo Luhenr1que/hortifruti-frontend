@@ -52,8 +52,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         let adminButtons = '';
         if (user && user.admin) {
             adminButtons = `
-                <a href="admin.html" class="btn btn-warning fw-bold px-4 rounded-pill shadow-sm me-2">
-                    <i class="fas fa-plus-circle me-2"></i> Cadastrar
+                <a href="admin.html" class="btn btn-warning fw-bold px-3 px-sm-4 rounded-pill shadow-sm me-2">
+                    <i class="fas fa-plus-circle me-1 me-sm-2"></i> <span class="d-none d-sm-inline">Cadastrar</span><span class="d-inline d-sm-none">Add</span>
                 </a>
             `;
         }
@@ -61,24 +61,24 @@ document.addEventListener("DOMContentLoaded", async () => {
         let authButton = '';
         if (user) {
             authButton = `
-                <span class="text-white me-3 d-none d-lg-inline"><i class="fas fa-user me-1"></i> Olá, ${user.usuario}</span>
-                <button onclick="logout()" class="btn btn-outline-light rounded-pill px-4">Sair</button>
+                <span class="text-white me-2 me-sm-3 d-none d-md-inline"><i class="fas fa-user me-1"></i> ${user.usuario}</span>
+                <button onclick="logout()" class="btn btn-outline-light rounded-pill px-3 px-sm-4">Sair</button>
             `;
         } else {
             authButton = `
-                <a href="login.html" class="btn btn-light rounded-pill px-4">Login</a>
+                <a href="login.html" class="btn btn-light rounded-pill px-3 px-sm-4">Login</a>
             `;
         }
 
         navPlaceholder.innerHTML = `
             <nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-3">
-                <div class="container">
-                    <a class="navbar-brand fw-bold fs-4" href="index.html">
+                <div class="container flex-wrap flex-lg-nowrap">
+                    <a class="navbar-brand fw-bold fs-4 order-1" href="index.html">
                         <i class="fas fa-leaf text-white me-2"></i> Hortifruti Premium
                     </a>
 
                     <!-- BARRA DE PESQUISA -->
-                    <form class="d-flex flex-grow-1 mx-lg-5 mx-2 my-2 my-lg-0" action="index.html" method="GET">
+                    <form class="d-flex flex-grow-1 mx-lg-5 my-2 my-lg-0 order-3 order-lg-2 w-100 w-lg-auto" action="index.html" method="GET">
                         <div class="input-group">
                             <input type="text" name="q" class="form-control border-0 rounded-pill-start ps-4" 
                                    placeholder="O que você procura hoje?" value="${queryVal}">
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         </div>
                     </form>
 
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center order-2 order-lg-3 ms-auto ms-lg-0">
                         <a href="index.html" class="btn btn-link text-white text-decoration-none me-3 d-none d-md-block">Home</a>
                         ${adminButtons}
                         ${authButton}
