@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Criar Conta - Hortifruti Premium</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+
+<body>
+
+    <!-- NAVBAR PLACEHOLDER -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- CONTEÚDO -->
+    <div class="container mt-5" style="max-width: 400px; min-height: 50vh; display: flex; align-items: center;">
+        <div class="card shadow p-4 rounded-4 w-100 border-0">
+            <h3 class="text-center mb-4 fw-bold text-dark">Criar Conta</h3>
+
+            <div id="alert-container"></div>
+
+            <form id="register-form">
+                <div class="mb-3">
+                    <input name="usuario" id="usuario" class="form-control rounded-3" placeholder="Usuário" required>
+                </div>
+                <div class="mb-4">
+                    <input type="password" name="senha" id="senha" class="form-control rounded-3" placeholder="Senha" required>
+                </div>
+
+                <button class="btn btn-success w-100 rounded-pill py-2 shadow-sm fw-bold mb-3">Registrar</button>
+            </form>
+
+            <div class="text-center mt-2">
+                <span class="text-muted small">Já possui uma conta? <a href="login.html" class="text-success text-decoration-none fw-bold">Fazer Login</a></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER PLACEHOLDER -->
+    <div id="footer-placeholder"></div>
+
+    <!-- CART PLACEHOLDER -->
+    <div id="cart-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/layout.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("token")) {
+                window.location.href = "index.html";
+            }
+
+            const form = document.getElementById("register-form");
+            form.addEventListener("submit", realizarRegistro);
+        });
+
+        async function realizarRegistro(event) {
+            event.preventDefault();
+            const alertContainer = document.getElementById("alert-container");
+            alertContainer.innerHTML = '';
+
+            const usuario = document.getElementById("usuario").value;
+            const senha = document.getElementById("senha").value;
+
+            try {
+                const response = await fetch(`${API_URL}/api/registrar`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ usuario, senha })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alertContainer.innerHTML = `
+                        <div class="alert alert-success rounded-3 small py-2">Conta criada com sucesso! Redirecionando para login...</div>
+                    `;
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 2000);
+                } else {
+                    alertContainer.innerHTML = `
+                        <div class="alert alert-danger rounded-3 small py-2">${data.erro || "Erro ao registrar usuário."}</div>
+                    `;
+                }
+            } catch (error) {
+                console.error(error);
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger rounded-3 small py-2">Não foi possível conectar ao servidor.</div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
