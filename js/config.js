@@ -1,2 +1,2 @@
 // Configurações globais do Frontend
-const API_URL = "http://127.0.0.1:5000";
+const API_URL = "https://Luhenr1que.pythonanywhere.com";
